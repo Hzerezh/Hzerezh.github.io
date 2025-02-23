@@ -132,6 +132,21 @@
         color: var(--tg-theme-section-header-text-color);
         background: var(--tg-theme-header-bg-color);
     }
+    .cancel-button {
+        background: var(--tg-theme-secondary-bg-color);
+        color: var(--tg-theme-destructive-text-color, #ff4444); /* Используем деструктивный цвет или fallback */
+        border: 1px solid var(--tg-theme-destructive-text-color, #ff4444);
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+    }
+
+    .cancel-button:hover {
+        background: var(--tg-theme-destructive-text-color, #ff4444);
+        color: var(--tg-theme-button-text-color, #ffffff);
+    }
 </style>
 </head>
 <body>
@@ -172,7 +187,8 @@
     </div>
 
     <div class="theme-section">
-        <button class="tg-button">Button</button>
+        <button class="tg-button">Основная кнопка</button>
+        <button class="cancel-button">Отмена</button>
         <div class="separator"></div>
         <div class="theme-item section-header">
             <span>Section Header</span>
