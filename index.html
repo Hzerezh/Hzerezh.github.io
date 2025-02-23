@@ -21,6 +21,7 @@
         }
         .row {
             display: flex;
+            max-width: 20%;
             justify-content: space-between;
             padding: 10px;
             background-color: #2f213f;
@@ -101,7 +102,7 @@
 
             const initData = parseInitData(window.Telegram.WebApp.initData);
             Object.entries(initData).forEach(([key, value]) => {
-                container.appendChild(createRow(key, value));
+                container.appendChild(createRow(`window.Telegram.WebApp.${key}`, value));
             });
 
             if (window.Telegram.WebApp.initDataUnsafe) {
