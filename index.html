@@ -8,81 +8,105 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 20px;
             background-color: #f9f9f9;
-            padding: 20px;
         }
         .container {
             max-width: 600px;
-            margin: auto;
+            margin: 0 auto;
             background: white;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .title {
-            text-align: center;
-            font-size: 24px;
-            margin-bottom: 20px;
         }
         .table {
             display: flex;
             flex-direction: column;
+            gap: 10px;
         }
         .row {
             display: flex;
             justify-content: space-between;
             padding: 10px;
-            border-bottom: 1px solid #ddd;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        .row:last-child {
-            border-bottom: none;
-        }
-        .cell {
-            flex: 1;
-            font-size: 14px;
+        .key {
             font-weight: bold;
+            color: #333;
         }
         .value {
-            flex: 2;
             word-break: break-word;
-            color: #333;
+            color: #555;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="title">Telegram Mini App Data</div>
-        <div class="table" id="data-table"></div>
+        <h2>Данные Mini App</h2>
+        <div class="table" id="dataTable"></div>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const tg = window.Telegram.WebApp;
-            const data = {
-                initData: tg.initData || "N/A",
-                initDataUnsafe: JSON.stringify(tg.initDataUnsafe, null, 2) || "N/A",
-                colorScheme: tg.colorScheme || "N/A",
-                themeParams: JSON.stringify(tg.themeParams, null, 2) || "N/A",
-                isExpanded: tg.isExpanded,
-                viewportHeight: tg.viewportHeight,
-                viewportStableHeight: tg.viewportStableHeight,
-                platform: tg.platform || "N/A",
-                version: tg.version || "N/A",
-                isTelegramWebview: tg.isTelegramWebView,
-                isIframe: tg.isIframe,
-                headerColor: tg.headerColor || "N/A",
-                backgroundColor: tg.backgroundColor || "N/A",
-                isClosingConfirmationEnabled: tg.isClosingConfirmationEnabled,
-            };
+        function createRow(key, value) {
+            const row = document.createElement('div');
+            row.classList.add('row');
 
-            const table = document.getElementById("data-table");
-            for (const key in data) {
-                const row = document.createElement("div");
-                row.className = "row";
-                row.innerHTML = `<div class='cell'>${key}</div><div class='value'>${data[key]}</div>`;
-                table.appendChild(row);
+            const keyDiv = document.createElement('div');
+            keyDiv.classList.add('key');
+            keyDiv.textContent = key;
+
+            const valueDiv = document.createElement('div');
+            valueDiv.classList.add('value');
+            valueDiv.textContent = value;
+
+            row.appendChild(keyDiv);
+            row.appendChild(valueDiv);
+            return row;
+        }
+
+        function parseAndDisplayData() {
+            const dataTable = document.getElementById('dataTable');
+            const webApp = window.Telegram.WebApp;
+
+            if (!webApp.initData || webApp.initData === '') {
+                dataTable.appendChild(createRow('Ошибка', 'Данные отсутствуют'));
+                return;
             }
-        });
+
+            const initDataParams = new URLSearchParams(webApp.initData);
+            const parsedInitData = {};
+
+            for (const [key, value] of initDataParams.entries()) {
+                parsedInitData[key] = decodeURIComponent(value);
+            }
+
+            // Добавляем `initData` по ключ-значение
+            dataTable.appendChild(createRow('initData (строка)', webApp.initData));
+
+            Object.keys(parsedInitData).forEach((key) => {
+                dataTable.appendChild(createRow(`initData → ${key}`, parsedInitData[key]));
+            });
+
+            // Добавляем `initDataUnsafe` в JSON-формате
+            if (webApp.initDataUnsafe) {
+                dataTable.appendChild(createRow('initDataUnsafe', JSON.stringify(webApp.initDataUnsafe, null, 2)));
+                Object.keys(webApp.initDataUnsafe).forEach((key) => {
+                    dataTable.appendChild(createRow(`initDataUnsafe → ${key}`, JSON.stringify(webApp.initDataUnsafe[key], null, 2)));
+                });
+            }
+
+            // Добавляем `themeParams`
+            if (webApp.themeParams) {
+                dataTable.appendChild(createRow('themeParams', JSON.stringify(webApp.themeParams, null, 2)));
+                Object.keys(webApp.themeParams).forEach((key) => {
+                    dataTable.appendChild(createRow(`themeParams → ${key}`, webApp.themeParams[key]));
+                });
+            }
+        }
+
+        window.onload = parseAndDisplayData;
     </script>
 </body>
 </html>
