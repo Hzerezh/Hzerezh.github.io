@@ -198,70 +198,115 @@
     
 
     <script>
-        function createRow(key, value) {
-            const row = document.createElement("div");
-            row.classList.add("row");
+    function createRow(key, value) {
+        const row = document.createElement("div");
+        row.classList.add("row");
 
-            const keyDiv = document.createElement("div");
-            keyDiv.classList.add("key");
-            keyDiv.textContent = key;
+        const keyDiv = document.createElement("div");
+        keyDiv.classList.add("key");
+        keyDiv.textContent = key;
 
-            const valueDiv = document.createElement("div");
-            valueDiv.classList.add("value");
+        const valueDiv = document.createElement("div");
+        valueDiv.classList.add("value");
 
-            if (typeof value === "object" && value !== null) {
+        const processValue = (val) => {
+            if (val === null || val === undefined) return 'null';
+            if (typeof val === 'object') {
                 const subTable = document.createElement("div");
                 subTable.classList.add("sub-table");
-
-                Object.entries(value).forEach(([subKey, subValue]) => {
+                
+                Object.entries(val).forEach(([subKey, subValue]) => {
                     subTable.appendChild(createRow(subKey, subValue));
                 });
-
-                valueDiv.appendChild(subTable);
-            } else {
-                valueDiv.textContent = value;
+                return subTable;
             }
+            if (typeof val === 'function') return `[Function: ${val.name}]`;
+            return val.toString();
+        };
 
-            row.appendChild(keyDiv);
-            row.appendChild(valueDiv);
+        valueDiv.appendChild(processValue(value));
+        row.appendChild(keyDiv);
+        row.appendChild(valueDiv);
 
-            return row;
-        }
+        return row;
+    }
 
-        function parseInitData(initDataString) {
-            const params = new URLSearchParams(initDataString);
-            const data = {};
-            for (const [key, value] of params.entries()) {
-                try {
-                    data[key] = JSON.parse(decodeURIComponent(value));
-                } catch {
-                    data[key] = decodeURIComponent(value);
-                }
-            }
-            return data;
-        }
-
-        function renderData() {
-            const container = document.getElementById("data-container");
-
-            if (!window.Telegram.WebApp.initData) {
-                container.innerHTML = "<p>Данные отсутствуют</p>";
-                return;
-            }
-
-            const initData = parseInitData(window.Telegram.WebApp.initData);
-            Object.entries(initData).forEach(([key, value]) => {
-                container.appendChild(createRow(key, value));
-            });
-
-            if (window.Telegram.WebApp.initDataUnsafe) {
-                container.appendChild(createRow("initDataUnsafe", window.Telegram.WebApp.initDataUnsafe));
+    function parseInitData(initDataString) {
+        const params = new URLSearchParams(initDataString);
+        const data = {};
+        for (const [key, value] of params.entries()) {
+            try {
+                data[key] = JSON.parse(decodeURIComponent(value));
+            } catch {
+                data[key] = decodeURIComponent(value);
             }
         }
+        return data;
+    }
 
-        Telegram.WebApp.ready();
-        renderData();
-    </script>
+    function renderWebAppData(container) {
+        const webApp = window.Telegram?.WebApp;
+        if (!webApp) {
+            container.innerHTML = "<p>Telegram WebApp API not available</p>";
+            return;
+        }
+
+        // Основные свойства WebApp
+        const mainProperties = {
+            initData: webApp.initData,
+            initDataUnsafe: webApp.initDataUnsafe,
+            version: webApp.version,
+            platform: webApp.platform,
+            colorScheme: webApp.colorScheme,
+            themeParams: webApp.themeParams,
+            isExpanded: webApp.isExpanded,
+            viewportHeight: webApp.viewportHeight,
+            viewportStableHeight: webApp.viewportStableHeight,
+            headerColor: webApp.headerColor,
+            backgroundColor: webApp.backgroundColor,
+            isClosingConfirmationEnabled: webApp.isClosingConfirmationEnabled,
+            isVersionAtLeast: webApp.isVersionAtLeast.toString(),
+        };
+
+        // Кнопки
+        const buttons = {
+            BackButton: webApp.BackButton,
+            MainButton: webApp.MainButton,
+            SettingsButton: webApp.SettingsButton,
+        };
+
+        // Haptic Feedback
+        const hapticFeedback = {
+            impactOccurred: webApp.HapticFeedback.impactOccurred.toString(),
+            notificationOccurred: webApp.HapticFeedback.notificationOccurred.toString(),
+            selectionChanged: webApp.HapticFeedback.selectionChanged.toString(),
+        };
+
+        Object.entries(mainProperties).forEach(([key, value]) => {
+            container.appendChild(createRow(key, value));
+        });
+
+        container.appendChild(createRow('HapticFeedback', hapticFeedback));
+        container.appendChild(createRow('Buttons', buttons));
+
+        // Парсинг initData
+        if (webApp.initData) {
+            const parsedInitData = parseInitData(webApp.initData);
+            container.appendChild(createRow('Parsed InitData', parsedInitData));
+        }
+    }
+
+    function renderData() {
+        const container = document.getElementById("data-container");
+        container.innerHTML = '';
+        renderWebAppData(container);
+    }
+
+    Telegram.WebApp.ready();
+    Telegram.WebApp.onEvent('themeChanged', renderData);
+    Telegram.WebApp.onEvent('viewportChanged', renderData);
+    window.addEventListener('load', renderData);
+</script>
 
 </body>
 </html>
