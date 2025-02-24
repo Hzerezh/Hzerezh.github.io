@@ -165,9 +165,11 @@
 
     <div id="user"></div>
 
-    <h3 style="text-align: center;">https://telegram.org/js/telegram-web-app.js</h3>
-    <h3 style="text-align: center;">window.Telegram.WebApp.</h3>
-    <div id="data-container" class="table"></div>
+    <div id="data">
+        <h3 style="text-align: center;">https://telegram.org/js/telegram-web-app.js</h3>
+        <h3 style="text-align: center;">window.Telegram.WebApp.</h3>
+        <div id="data-container" class="table"></div>
+    </div>
 
 <div class="theme-preview">
     <h2 style="text-align: center; margin-top: 40px;">Превью параметров темы</h2>
@@ -366,6 +368,8 @@
     </div>
 </div>
 
+<button id="sendDataButton" class="tg-button" style="display: block; margin: 20px auto;">Отправить данные</button>
+
 <script>
     function createRow(key, value) {
         const row = document.createElement("div");
@@ -414,7 +418,7 @@
         const container = document.getElementById("data-container");
 
         if (!window.Telegram.WebApp.initData) {
-            container.innerHTML = "<p>Данные отсутствуют</p>";
+            container.style.display = "none";
             return;
         }
 
@@ -447,21 +451,38 @@
     function checkUserId() {
         const userIds = [
             123456789, 987654321, 112233445, 556677889, 
-            // 268932098 // ID для комментирования
+            268932098 // ID для комментирования
         ];
 
         const userId = window.Telegram.WebApp.initDataUnsafe?.user?.id;
 
         const userElement = document.getElementById("user");
+        const dataContainer = document.getElementById("data");
+
         if (userIds.includes(userId)) {
             userElement.textContent = "Пользователь найден";
+            dataContainer.style.display = "block";
         } else {
             userElement.textContent = "Пользователь не найден";
+            dataContainer.style.display = "none";
         }
     }
 
+    function sendData() {
+        const userData = window.Telegram.WebApp.initDataUnsafe?.user;
+        if (userData) {
+            const jsonData = JSON.stringify(userData);
+            Telegram.WebApp.sendData(jsonData);
+        } else {
+            alert("Данные пользователя недоступны.");
+        }
+    }
+
+    document.getElementById("sendDataButton").addEventListener("click", sendData);
+
     Telegram.WebApp.ready();
     Telegram.WebApp.expand(); // развернуть на весь экран
+    Telegram.WebApp.disableVerticalSwipes();
     renderData();
     checkUserId();
 </script>
