@@ -370,6 +370,42 @@
 
 <button id="sendDataButton" class="tg-button" style="display: block; margin: 20px auto;">Отправить данные</button>
 
+<div>
+<div id="webAppDataContainer">
+
+</div>
+<script>
+    function displayWebAppData() {
+        const container = document.getElementById("webAppDataContainer");
+        const webAppData = window.Telegram.WebApp;
+
+        // Очищаем контейнер перед добавлением данных
+        container.innerHTML = '';
+
+        // Проходим по всем свойствам объекта window.Telegram.WebApp
+        for (const [key, value] of Object.entries(webAppData)) {
+            const row = document.createElement("div");
+            row.classList.add("row");
+
+            const keyDiv = document.createElement("div");
+            keyDiv.classList.add("key");
+            keyDiv.textContent = key;
+
+            const valueDiv = document.createElement("div");
+            valueDiv.classList.add("value");
+            valueDiv.textContent = JSON.stringify(value, null, 2); // Преобразуем значение в строку
+
+            row.appendChild(keyDiv);
+            row.appendChild(valueDiv);
+            container.appendChild(row);
+        }
+    }
+
+    // Вызываем функцию для отображения данных
+    displayWebAppData();
+</script>
+</div>
+
 <script>
     function createRow(key, value) {
         const row = document.createElement("div");
@@ -485,6 +521,10 @@
     renderData();
     checkUserId();
 </script>
+
+
+
+
 
 </body>
 </html>
