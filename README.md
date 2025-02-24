@@ -10,10 +10,9 @@
 ## Использование
 В js скрипте
 ```js
-window.Telegram.WebApp
+window.Telegram.WebApp.         // переменная через window
 
-
-Telegram.WebApp.ready();
+Telegram.WebApp.ready()         // переменная без window
 ```
 
 CSS
