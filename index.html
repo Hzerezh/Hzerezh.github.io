@@ -149,13 +149,6 @@
     }
 
 
-    
-    .loading {
-        padding: 20px;
-        text-align: center;
-        color: var(--tg-theme-hint-color);
-        font-style: italic;
-    }
 </style>
 </head>
 <body>
@@ -334,8 +327,6 @@
         try {
             const container = document.getElementById("data-container");
             if (!container) return;
-
-            container.innerHTML = '<div class="loading">Loading...</div>';
             
             setTimeout(() => { // Даем время на рендеринг
                 const webAppData = getSafeWebAppData();
