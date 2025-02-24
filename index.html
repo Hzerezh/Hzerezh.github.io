@@ -204,176 +204,86 @@
     
 
 <script>
-    function createRow(key, value, depth = 0) {
-        try {
-            const row = document.createElement("div");
-            row.classList.add("row");
+    function createRow(key, value) {
+        const row = document.createElement("div");
+        row.classList.add("row");
 
-            const keyDiv = document.createElement("div");
-            keyDiv.classList.add("key");
-            keyDiv.textContent = key;
+        const keyDiv = document.createElement("div");
+        keyDiv.classList.add("key");
+        keyDiv.textContent = key;
 
-            const valueDiv = document.createElement("div");
-            valueDiv.classList.add("value");
+        const valueDiv = document.createElement("div");
+        valueDiv.classList.add("value");
 
-            const processValue = (val, currentDepth) => {
-                if (currentDepth > 3) return '[Max Depth Reached]'; // Защита от бесконечной рекурсии
-                
-                if (val === null) return 'null';
-                if (val === undefined) return 'undefined';
-                
-                if (typeof val === 'object') {
-                    if (val instanceof Date) return val.toISOString();
-                    if (Object.keys(val).length === 0) return '{}';
-                    
-                    const subTable = document.createElement("div");
-                    subTable.classList.add("sub-table");
-                    
-                    for (const [subKey, subValue] of Object.entries(val)) {
-                        if (subTable.childElementCount > 20) { // Лимит элементов
-                            subTable.appendChild(createRow('...', '[...]', currentDepth + 1));
-                            break;
-                        }
-                        subTable.appendChild(createRow(subKey, subValue, currentDepth + 1));
-                    }
-                    return subTable;
-                }
-                
-                if (typeof val === 'function') return `[Function]`;
-                return String(val);
-            };
+        if (typeof value === "object" && value !== null) {
+            const subTable = document.createElement("div");
+            subTable.classList.add("sub-table");
 
-            valueDiv.appendChild(processValue(value, depth));
-            row.appendChild(keyDiv);
-            row.appendChild(valueDiv);
+            Object.entries(value).forEach(([subKey, subValue]) => {
+                subTable.appendChild(createRow(subKey, subValue));
+            });
 
-            return row;
-        } catch (error) {
-            console.error('Error creating row:', error);
-            return document.createElement("div"); // Возвращаем пустой элемент при ошибке
+            valueDiv.appendChild(subTable);
+        } else {
+            valueDiv.textContent = value;
         }
+
+        row.appendChild(keyDiv);
+        row.appendChild(valueDiv);
+
+        return row;
     }
 
-    function safeParseInitData(initDataString) {
-        try {
-            const params = new URLSearchParams(initDataString);
-            const data = {};
-            
-            for (const [key, value] of params.entries()) {
-                try {
-                    data[key] = JSON.parse(decodeURIComponent(value));
-                } catch {
-                    data[key] = decodeURIComponent(value);
-                }
+    function parseInitData(initDataString) {
+        const params = new URLSearchParams(initDataString);
+        const data = {};
+        for (const [key, value] of params.entries()) {
+            try {
+                data[key] = JSON.parse(decodeURIComponent(value));
+            } catch {
+                data[key] = decodeURIComponent(value);
             }
-            return data;
-        } catch (error) {
-            console.error('Error parsing initData:', error);
-            return {};
         }
-    }
-
-    function getSafeWebAppData() {
-        try {
-            const webApp = window.Telegram?.WebApp;
-            if (!webApp) return null;
-
-            return {
-                // Основные свойства
-                initData: webApp.initData,
-                version: webApp.version,
-                platform: webApp.platform,
-                colorScheme: webApp.colorScheme,
-                isExpanded: webApp.isExpanded,
-                viewportHeight: webApp.viewportHeight,
-                viewportStableHeight: webApp.viewportStableHeight,
-                headerColor: webApp.headerColor,
-                backgroundColor: webApp.backgroundColor,
-                
-                // ThemeParams
-                themeParams: {...webApp.themeParams},
-                
-                // InitDataUnsafe
-                initDataUnsafe: webApp.initDataUnsafe ? {
-                    user: webApp.initDataUnsafe.user,
-                    receiver: webApp.initDataUnsafe.receiver,
-                    chat: webApp.initDataUnsafe.chat,
-                    chatType: webApp.initDataUnsafe.chatType,
-                    chatInstance: webApp.initDataUnsafe.chatInstance,
-                    startParam: webApp.initDataUnsafe.startParam,
-                    canSendPost: webApp.initDataUnsafe.canSendPost,
-                } : null,
-                
-                // Состояние кнопок
-                BackButton: webApp.BackButton ? {
-                    isVisible: webApp.BackButton.isVisible,
-                } : null,
-                
-                MainButton: webApp.MainButton ? {
-                    text: webApp.MainButton.text,
-                    isVisible: webApp.MainButton.isVisible,
-                    isActive: webApp.MainButton.isActive,
-                    color: webApp.MainButton.color,
-                    textColor: webApp.MainButton.textColor,
-                } : null,
-            };
-        } catch (error) {
-            console.error('Error getting WebApp data:', error);
-            return null;
-        }
+        return data;
     }
 
     function renderData() {
-        try {
-            const container = document.getElementById("data-container");
-            if (!container) return;
-            
-            setTimeout(() => { // Даем время на рендеринг
-                const webAppData = getSafeWebAppData();
-                container.innerHTML = '';
-                
-                if (!webAppData) {
-                    container.innerHTML = '<p>WebApp data not available</p>';
-                    return;
-                }
+        const container = document.getElementById("data-container");
 
-                // Основные данные
-                Object.entries(webAppData).forEach(([key, value]) => {
-                    if (value !== null) {
-                        container.appendChild(createRow(key, value));
-                    }
-                });
-
-                // Парсинг InitData
-                if (webAppData.initData) {
-                    const parsedData = safeParseInitData(webAppData.initData);
-                    container.appendChild(createRow('parsedInitData', parsedData));
-                }
-            }, 50);
-        } catch (error) {
-            console.error('Render error:', error);
+        if (!window.Telegram.WebApp.initData) {
+            container.innerHTML = "<p>Данные отсутствуют</p>";
+            return;
         }
+
+        const initData = parseInitData(window.Telegram.WebApp.initData);
+        Object.entries(initData).forEach(([key, value]) => {
+            container.appendChild(createRow(key, value));
+        });
+
+        if (window.Telegram.WebApp.initDataUnsafe) {
+            container.appendChild(createRow("initDataUnsafe", window.Telegram.WebApp.initDataUnsafe));
+        }
+
+        // Добавляем все доступные поля из window.Telegram.WebApp
+        const webAppFields = [
+            'version', 'platform', 'colorScheme', 'themeParams', 'isActive', 'isExpanded',
+            'viewportHeight', 'viewportStableHeight', 'headerColor', 'backgroundColor',
+            'bottomBarColor', 'isClosingConfirmationEnabled', 'isVerticalSwipesEnabled',
+            'isFullscreen', 'isOrientationLocked', 'safeAreaInset', 'contentSafeAreaInset',
+            'BackButton', 'MainButton', 'SecondaryButton', 'SettingsButton', 'HapticFeedback',
+            'CloudStorage', 'BiometricManager', 'Accelerometer', 'DeviceOrientation',
+            'Gyroscope', 'LocationManager'
+        ];
+
+        webAppFields.forEach(field => {
+            if (window.Telegram.WebApp[field] !== undefined) {
+                container.appendChild(createRow(field, window.Telegram.WebApp[field]));
+            }
+        });
     }
 
-    // Инициализация
-    if (window.Telegram && Telegram.WebApp) {
-        Telegram.WebApp.ready();
-        Telegram.WebApp.expand(); // Для получения корректных размеров
-        renderData();
-        
-        // Оптимизированные обработчики
-        let updateTimeout;
-        const delayedRender = () => {
-            clearTimeout(updateTimeout);
-            updateTimeout = setTimeout(renderData, 200);
-        };
-        
-        Telegram.WebApp.onEvent('themeChanged', delayedRender);
-        Telegram.WebApp.onEvent('viewportChanged', delayedRender);
-    } else {
-        document.getElementById("data-container").innerHTML = 
-            '<p>Telegram WebApp environment not detected</p>';
-    }
+    Telegram.WebApp.ready();
+    renderData();
 </script>
 
 </body>
