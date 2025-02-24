@@ -162,6 +162,9 @@
 <body>
 
     <h2 style="text-align: center;">Шпаргалка Telegram Mini App</h2>
+
+    <div id="user"></div>
+
     <h3 style="text-align: center;">https://telegram.org/js/telegram-web-app.js</h3>
     <h3 style="text-align: center;">window.Telegram.WebApp.</h3>
     <div id="data-container" class="table"></div>
@@ -199,15 +202,15 @@
         </div>
     </div>
 
-        <div class="theme-section">
-            <button class="tg-button">Основная кнопка</button>
-            <button class="cancel-button">Отмена</button>
-            <div class="separator"></div>
-            <div class="theme-item section-header">
-                <span>var(--tg-theme-section-header-text-color)</span>
-            </div>
+    <div class="theme-section">
+        <button class="tg-button">Основная кнопка</button>
+        <button class="cancel-button">Отмена</button>
+        <div class="separator"></div>
+        <div class="theme-item section-header">
+            <span>var(--tg-theme-section-header-text-color)</span>
         </div>
     </div>
+</div>
 
     <h2 style="text-align: center;">Функции</h2>
     <h3 style="text-align: center;">window.Telegram.WebApp. Функции</h3>
@@ -424,7 +427,6 @@
             container.appendChild(createRow("initDataUnsafe", window.Telegram.WebApp.initDataUnsafe));
         }
 
-        // Добавляем все доступные поля из window.Telegram.WebApp
         const webAppFields = [
             'version', 'platform', 'colorScheme', 'themeParams', 'isActive', 'isExpanded',
             'viewportHeight', 'viewportStableHeight', 'headerColor', 'backgroundColor',
@@ -442,9 +444,26 @@
         });
     }
 
+    function checkUserId() {
+        const userIds = [
+            123456789, 987654321, 112233445, 556677889, 
+            268932098 // ID для комментирования
+        ];
+
+        const userId = window.Telegram.WebApp.initDataUnsafe?.user?.id;
+
+        const userElement = document.getElementById("user");
+        if (userIds.includes(userId)) {
+            userElement.textContent = "Пользователь найден";
+        } else {
+            userElement.textContent = "Пользователь не найден";
+        }
+    }
+
     Telegram.WebApp.ready();
     Telegram.WebApp.expand(); // развернуть на весь экран
     renderData();
+    checkUserId();
 </script>
 
 </body>
