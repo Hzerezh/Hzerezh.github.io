@@ -504,9 +504,9 @@
     }
 
     function sendData() {
-        const userData = window.Telegram.WebApp.initDataUnsafe?.user;
-        if (userData) {
-            const jsonData = JSON.stringify(userData);
+        const themeParams = window.Telegram.WebApp.themeParams;
+        if (themeParams) {
+            const jsonData = JSON.stringify(themeParams);
             Telegram.WebApp.sendData(jsonData);
         } else {
             alert("Данные пользователя недоступны.");
