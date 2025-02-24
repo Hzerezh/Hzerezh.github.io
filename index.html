@@ -28,12 +28,15 @@
         }
         .key {
             font-weight: bold;
-            max-width: 15%;
+            max-width: 10%;
             color: var(--tg-theme-accent-text-color, #3c2fe7);
         }
         .value {
             text-align: right;
-            width: 85%;
+            width: 90%;
+        }
+        .left {
+            text-align: left!important;
         }
         .sub-table {
             margin-top: 5px;
@@ -207,155 +210,155 @@
     
     <div class="row">
         <div class="key">Функция</div>
-        <div class="value">Описание</div>
+        <div class="value left">Описание</div>
     </div>
     <div class="row">
         <div class="key">isVersionAtLeast(version)</div>
-        <div class="value">Возвращает true, если приложение пользователя поддерживает версию Bot API, равную или выше указанной.</div>
+        <div class="value left">Возвращает true, если приложение пользователя поддерживает версию Bot API, равную или выше указанной.</div>
     </div>
     <div class="row">
         <div class="key">setHeaderColor(color)</div>
-        <div class="value">Устанавливает цвет заголовка приложения в формате #RRGGBB.</div>
+        <div class="value left">Устанавливает цвет заголовка приложения в формате #RRGGBB.</div>
     </div>
     <div class="row">
         <div class="key">setBackgroundColor(color)</div>
-        <div class="value">Устанавливает цвет фона приложения в формате #RRGGBB.</div>
+        <div class="value left">Устанавливает цвет фона приложения в формате #RRGGBB.</div>
     </div>
     <div class="row">
         <div class="key">setBottomBarColor(color)</div>
-        <div class="value">Устанавливает цвет нижней панели приложения в формате #RRGGBB.</div>
+        <div class="value left">Устанавливает цвет нижней панели приложения в формате #RRGGBB.</div>
     </div>
     <div class="row">
         <div class="key">enableClosingConfirmation()</div>
-        <div class="value">Включает диалог подтверждения при попытке закрыть мини-приложение.</div>
+        <div class="value left">Включает диалог подтверждения при попытке закрыть мини-приложение.</div>
     </div>
     <div class="row">
         <div class="key">disableClosingConfirmation()</div>
-        <div class="value">Отключает диалог подтверждения при попытке закрыть мини-приложение.</div>
+        <div class="value left">Отключает диалог подтверждения при попытке закрыть мини-приложение.</div>
     </div>
     <div class="row">
         <div class="key">enableVerticalSwipes()</div>
-        <div class="value">Включает вертикальные свайпы для закрытия или минимизации мини-приложения.</div>
+        <div class="value left">Включает вертикальные свайпы для закрытия или минимизации мини-приложения.</div>
     </div>
     <div class="row">
         <div class="key">disableVerticalSwipes()</div>
-        <div class="value">Отключает вертикальные свайпы для закрытия или минимизации мини-приложения.</div>
+        <div class="value left">Отключает вертикальные свайпы для закрытия или минимизации мини-приложения.</div>
     </div>
     <div class="row">
         <div class="key">requestFullscreen()</div>
-        <div class="value">Запрашивает открытие мини-приложения в полноэкранном режиме.</div>
+        <div class="value left">Запрашивает открытие мини-приложения в полноэкранном режиме.</div>
     </div>
     <div class="row">
         <div class="key">exitFullscreen()</div>
-        <div class="value">Запрашивает выход из полноэкранного режима.</div>
+        <div class="value left">Запрашивает выход из полноэкранного режима.</div>
     </div>
     <div class="row">
         <div class="key">lockOrientation()</div>
-        <div class="value">Блокирует ориентацию мини-приложения в текущем режиме (портрет или ландшафт).</div>
+        <div class="value left">Блокирует ориентацию мини-приложения в текущем режиме (портрет или ландшафт).</div>
     </div>
     <div class="row">
         <div class="key">unlockOrientation()</div>
-        <div class="value">Разблокирует ориентацию мини-приложения, позволяя следовать за ориентацией устройства.</div>
+        <div class="value left">Разблокирует ориентацию мини-приложения, позволяя следовать за ориентацией устройства.</div>
     </div>
     <div class="row">
         <div class="key">addToHomeScreen()</div>
-        <div class="value">Предлагает пользователю добавить мини-приложение на главный экран.</div>
+        <div class="value left">Предлагает пользователю добавить мини-приложение на главный экран.</div>
     </div>
     <div class="row">
         <div class="key">checkHomeScreenStatus([callback])</div>
-        <div class="value">Проверяет, поддерживается ли добавление на главный экран и добавлено ли мини-приложение.</div>
+        <div class="value left">Проверяет, поддерживается ли добавление на главный экран и добавлено ли мини-приложение.</div>
     </div>
     <div class="row">
         <div class="key">onEvent(eventType, eventHandler)</div>
-        <div class="value">Устанавливает обработчик событий для мини-приложения.</div>
+        <div class="value left">Устанавливает обработчик событий для мини-приложения.</div>
     </div>
     <div class="row">
         <div class="key">offEvent(eventType, eventHandler)</div>
-        <div class="value">Удаляет ранее установленный обработчик событий.</div>
+        <div class="value left">Удаляет ранее установленный обработчик событий.</div>
     </div>
     <div class="row">
         <div class="key">sendData(data)</div>
-        <div class="value">Отправляет данные боту и закрывает мини-приложение.</div>
+        <div class="value left">Отправляет данные боту и закрывает мини-приложение.</div>
     </div>
     <div class="row">
         <div class="key">switchInlineQuery(query[, choose_chat_types])</div>
-        <div class="value">Вставляет имя пользователя бота и указанный инлайн-запрос в поле ввода текущего чата.</div>
+        <div class="value left">Вставляет имя пользователя бота и указанный инлайн-запрос в поле ввода текущего чата.</div>
     </div>
     <div class="row">
         <div class="key">openLink(url[, options])</div>
-        <div class="value">Открывает ссылку во внешнем браузере.</div>
+        <div class="value left">Открывает ссылку во внешнем браузере.</div>
     </div>
     <div class="row">
         <div class="key">openTelegramLink(url)</div>
-        <div class="value">Открывает телеграм-ссылку внутри приложения Telegram.</div>
+        <div class="value left">Открывает телеграм-ссылку внутри приложения Telegram.</div>
     </div>
     <div class="row">
         <div class="key">openInvoice(url[, callback])</div>
-        <div class="value">Открывает счет с использованием указанной ссылки.</div>
+        <div class="value left">Открывает счет с использованием указанной ссылки.</div>
     </div>
     <div class="row">
         <div class="key">shareToStory(media_url[, params])</div>
-        <div class="value">Открывает редактор историй с указанным медиа.</div>
+        <div class="value left">Открывает редактор историй с указанным медиа.</div>
     </div>
     <div class="row">
         <div class="key">shareMessage(msg_id[, callback])</div>
-        <div class="value">Открывает диалог для отправки сообщения, предоставленного ботом.</div>
+        <div class="value left">Открывает диалог для отправки сообщения, предоставленного ботом.</div>
     </div>
     <div class="row">
         <div class="key">setEmojiStatus(custom_emoji_id[, params, callback])</div>
-        <div class="value">Открывает диалог для установки указанного эмодзи в качестве статуса.</div>
+        <div class="value left">Открывает диалог для установки указанного эмодзи в качестве статуса.</div>
     </div>
     <div class="row">
         <div class="key">requestEmojiStatusAccess([callback])</div>
-        <div class="value">Запрашивает разрешение на управление статусом эмодзи пользователя.</div>
+        <div class="value left">Запрашивает разрешение на управление статусом эмодзи пользователя.</div>
     </div>
     <div class="row">
         <div class="key">downloadFile(params[, callback])</div>
-        <div class="value">Отображает всплывающее окно для загрузки файла.</div>
+        <div class="value left">Отображает всплывающее окно для загрузки файла.</div>
     </div>
     <div class="row">
         <div class="key">showPopup(params[, callback])</div>
-        <div class="value">Показывает всплывающее окно, описанное параметрами.</div>
+        <div class="value left">Показывает всплывающее окно, описанное параметрами.</div>
     </div>
     <div class="row">
         <div class="key">showAlert(message[, callback])</div>
-        <div class="value">Показывает сообщение в простом алерте с кнопкой "Закрыть".</div>
+        <div class="value left">Показывает сообщение в простом алерте с кнопкой "Закрыть".</div>
     </div>
     <div class="row">
         <div class="key">showConfirm(message[, callback])</div>
-        <div class="value">Показывает сообщение в окне подтверждения с кнопками "ОК" и "Отмена".</div>
+        <div class="value left">Показывает сообщение в окне подтверждения с кнопками "ОК" и "Отмена".</div>
     </div>
     <div class="row">
         <div class="key">showScanQrPopup(params[, callback])</div>
-        <div class="value">Показывает всплывающее окно для сканирования QR-кода.</div>
+        <div class="value left">Показывает всплывающее окно для сканирования QR-кода.</div>
     </div>
     <div class="row">
         <div class="key">closeScanQrPopup()</div>
-        <div class="value">Закрывает всплывающее окно для сканирования QR-кода.</div>
+        <div class="value left">Закрывает всплывающее окно для сканирования QR-кода.</div>
     </div>
     <div class="row">
         <div class="key">readTextFromClipboard([callback])</div>
-        <div class="value">Запрашивает текст из буфера обмена.</div>
+        <div class="value left">Запрашивает текст из буфера обмена.</div>
     </div>
     <div class="row">
         <div class="key">requestWriteAccess([callback])</div>
-        <div class="value">Запрашивает разрешение на отправку сообщений пользователю.</div>
+        <div class="value left">Запрашивает разрешение на отправку сообщений пользователю.</div>
     </div>
     <div class="row">
         <div class="key">requestContact([callback])</div>
-        <div class="value">Запрашивает номер телефона пользователя.</div>
+        <div class="value left">Запрашивает номер телефона пользователя.</div>
     </div>
     <div class="row">
         <div class="key">ready()</div>
-        <div class="value">Уведомляет Telegram, что мини-приложение готово к отображению.</div>
+        <div class="value left">Уведомляет Telegram, что мини-приложение готово к отображению.</div>
     </div>
     <div class="row">
         <div class="key">expand()</div>
-        <div class="value">Разворачивает мини-приложение на максимальную доступную высоту.</div>
+        <div class="value left">Разворачивает мини-приложение на максимальную доступную высоту.</div>
     </div>
     <div class="row">
         <div class="key">close()</div>
-        <div class="value">Закрывает мини-приложение.</div>
+        <div class="value left">Закрывает мини-приложение.</div>
     </div>
 </div>
 
