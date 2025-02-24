@@ -236,6 +236,13 @@
         color: var(--tg-theme-button-text-color, #ffffff);
     }
 
+    pre code {
+        display: block;
+        padding: 15px;
+        background: var(--tg-theme-secondary-bg-color);
+        border-radius: 5px;
+        white-space: pre-wrap;
+    }
 
 </style>
 </head>
@@ -256,10 +263,7 @@
                 </div>
                 <div id="collapseConnection" class="collapse" aria-labelledby="headingConnection" data-parent="#webAppAccordion">
                     <div class="card-body">
-                        <!-- Содержимое для раздела "Подключение" -->
-                        <pre>
-                            <script src="https://telegram.org/js/telegram-web-app.js"></script>
-                        </pre>
+                        <pre style="color: var(--tg-theme-text-color);"><code>&lt;script src="https://telegram.org/js/telegram-web-app.js"&gt;&lt;/script&gt;</code></pre>
                     </div>
                 </div>
             </div>
@@ -275,11 +279,11 @@
                 </div>
                 <div id="collapseInitialization" class="collapse" aria-labelledby="headingInitialization" data-parent="#webAppAccordion">
                     <div class="card-body">
-                        <!-- Содержимое для раздела "Инициализация" -->
-                        <pre>
-                            window.Telegram.WebApp.         // переменная через window
-                            Telegram.WebApp.ready();        // переменная без window
-                        </pre>
+                        <pre style="color: var(--tg-theme-text-color);"><code>// Основные методы
+window.Telegram.WebApp.         // переменная через window
+
+Telegram.WebApp.ready();        // переменная без window
+Telegram.WebApp.expand();</code></pre>
                     </div>
                 </div>
             </div>
@@ -297,6 +301,37 @@
                     <div class="card-body">
                         <!-- Содержимое для раздела "Пользователь" -->
                         <div id="user"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Отправка данных -->
+            <div class="card">
+                <div class="card-header" id="headingSendData">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseSendData" aria-expanded="true" aria-controls="collapseSendData">
+                            Отправка данных
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapseSendData" class="collapse" aria-labelledby="headingSendData" data-parent="#webAppAccordion">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="jsonInput">Данные для отправки:</label>
+                            <textarea 
+                                id="jsonInput" 
+                                class="form-control"
+                                rows="10"
+                                placeholder="Введите JSON данные..."
+                                style="
+                                    margin-bottom: 20px;
+                                    background: var(--tg-theme-secondary-bg-color);
+                                    color: var(--tg-theme-text-color);
+                                    border: 1px solid var(--tg-theme-section-separator-color);
+                                ">
+                            </textarea>
+                        </div>
+                        <button id="sendDataButton" class="tg-button w-100">Отправить данные</button>
                     </div>
                 </div>
             </div>
@@ -388,7 +423,6 @@
                 <div id="collapseFunctions" class="collapse" aria-labelledby="headingFunctions" data-parent="#webAppAccordion">
                     <div class="card-body">
                         <!-- Содержимое для раздела "Функции" -->
-                        <h2 class="text-center">Функции</h2>
                         <h3 class="text-center">window.Telegram.WebApp. Функции</h3>
                         <div class="table theme-preview">
 
@@ -545,28 +579,6 @@
                 </div>
             </div>
 
-            <!-- Отправка данных -->
-            <div class="card">
-                <div class="card-header" id="headingSendData">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseSendData" aria-expanded="true" aria-controls="collapseSendData">
-                            Отправка данных
-                        </button>
-                    </h2>
-                </div>
-                <div id="collapseSendData" class="collapse" aria-labelledby="headingSendData" data-parent="#webAppAccordion">
-                    <div class="card-body">
-                        <!-- Содержимое для раздела "Отправка данных" -->
-                        
-                        <!-- Поле для ввода JSON -->
-                        <textarea id="jsonInput" class="form-control" rows="10" style="margin-bottom: 20px;"></textarea>
-                        
-                        <button id="sendDataButton" class="tg-button" style="display: block; margin: 20px auto;">Отправить данные</button>
-                        
-                    </div>
-                </div>
-            </div>
-
             <!-- Сырые данные -->
             <div class="card">
                 <div class="card-header" id="headingRawData">
@@ -602,214 +614,9 @@
         </div>
     </div>
 
-
-    <!-- <div id="data">
-        <h3 style="text-align: center;">window.Telegram.WebApp.</h3>
-        <div id="data-container" class="table"></div>
-    </div> -->
-
-<!-- <div class="theme-preview">
-    <h2 style="text-align: center; margin-top: 40px;">Превью параметров темы</h2>
-    <h3 style="text-align: center; margin-top: 40px;">window.Telegram.WebApp.themeParams</h3>
     
-    <div class="theme-section">
-        <div class="theme-item bg-color">
-            <span>var(--tg-theme-bg-color)</span>
-        </div>
-        <div class="theme-item secondary-bg-color">
-            <span>var(--tg-theme-secondary-bg-color)</span>
-        </div>
-        <div class="theme-item header-bg-color">
-            <span>var(--tg-theme-header-bg-color)</span>
-        </div>
-        <div class="theme-item bottom-bar-bg-color">
-            <span>var(--tg-theme-bottom-bar-bg-color)</span>
-        </div>
-        <div class="theme-item section-bg-color">
-            <span>var(--tg-theme-section-bg-color)</span>
-        </div>
-    </div>
-
-    <div class="theme-section">
-        <div class="theme-item text-colors">
-            <span class="main-text">var(--tg-theme-text-color)</span>
-            <span class="hint-text">var(--tg-theme-hint-color)</span>
-            <span class="link-text">var(--tg-theme-link-color)</span>
-            <span class="accent-text">var(--tg-theme-accent-text-color)</span>
-            <span class="subtitle-text">var(--tg-theme-subtitle-text-color)</span>
-            <span class="destructive-text">var(--tg-theme-destructive-text-color)</span>
-        </div>
-    </div>
-
-    <div class="theme-section">
-        <button class="tg-button">Основная кнопка</button>
-        <button class="cancel-button">Отмена</button>
-        <div class="separator"></div>
-        <div class="theme-item section-header">
-            <span>var(--tg-theme-section-header-text-color)</span>
-        </div>
-    </div>
-</div> -->
-
-    <!-- <h2 style="text-align: center;">Функции</h2>
-    <h3 style="text-align: center;">window.Telegram.WebApp. Функции</h3>
-    <div class="table theme-preview">
-
-    <div class="row">
-        <div class="key">isVersionAtLeast(version)</div>
-        <div class="value left">Возвращает true, если приложение пользователя поддерживает версию Bot API, равную или выше указанной.</div>
-    </div>
-    <div class="row">
-        <div class="key">setHeaderColor(color)</div>
-        <div class="value left">Устанавливает цвет заголовка приложения в формате #RRGGBB.</div>
-    </div>
-    <div class="row">
-        <div class="key">setBackgroundColor(color)</div>
-        <div class="value left">Устанавливает цвет фона приложения в формате #RRGGBB.</div>
-    </div>
-    <div class="row">
-        <div class="key">setBottomBarColor(color)</div>
-        <div class="value left">Устанавливает цвет нижней панели приложения в формате #RRGGBB.</div>
-    </div>
-    <div class="row">
-        <div class="key">enableClosingConfirmation()</div>
-        <div class="value left">Включает диалог подтверждения при попытке закрыть мини-приложение.</div>
-    </div>
-    <div class="row">
-        <div class="key">disableClosingConfirmation()</div>
-        <div class="value left">Отключает диалог подтверждения при попытке закрыть мини-приложение.</div>
-    </div>
-    <div class="row">
-        <div class="key">enableVerticalSwipes()</div>
-        <div class="value left">Включает вертикальные свайпы для закрытия или минимизации мини-приложения.</div>
-    </div>
-    <div class="row">
-        <div class="key">disableVerticalSwipes()</div>
-        <div class="value left">Отключает вертикальные свайпы для закрытия или минимизации мини-приложения.</div>
-    </div>
-    <div class="row">
-        <div class="key">requestFullscreen()</div>
-        <div class="value left">Запрашивает открытие мини-приложения в полноэкранном режиме.</div>
-    </div>
-    <div class="row">
-        <div class="key">exitFullscreen()</div>
-        <div class="value left">Запрашивает выход из полноэкранного режима.</div>
-    </div>
-    <div class="row">
-        <div class="key">lockOrientation()</div>
-        <div class="value left">Блокирует ориентацию мини-приложения в текущем режиме (портрет или ландшафт).</div>
-    </div>
-    <div class="row">
-        <div class="key">unlockOrientation()</div>
-        <div class="value left">Разблокирует ориентацию мини-приложения, позволяя следовать за ориентацией устройства.</div>
-    </div>
-    <div class="row">
-        <div class="key">addToHomeScreen()</div>
-        <div class="value left">Предлагает пользователю добавить мини-приложение на главный экран.</div>
-    </div>
-    <div class="row">
-        <div class="key">checkHomeScreenStatus([callback])</div>
-        <div class="value left">Проверяет, поддерживается ли добавление на главный экран и добавлено ли мини-приложение.</div>
-    </div>
-    <div class="row">
-        <div class="key">onEvent(eventType, eventHandler)</div>
-        <div class="value left">Устанавливает обработчик событий для мини-приложения.</div>
-    </div>
-    <div class="row">
-        <div class="key">offEvent(eventType, eventHandler)</div>
-        <div class="value left">Удаляет ранее установленный обработчик событий.</div>
-    </div>
-    <div class="row">
-        <div class="key">sendData(data)</div>
-        <div class="value left">Отправляет данные боту и закрывает мини-приложение.</div>
-    </div>
-    <div class="row">
-        <div class="key">switchInlineQuery(query[, choose_chat_types])</div>
-        <div class="value left">Вставляет имя пользователя бота и указанный инлайн-запрос в поле ввода текущего чата.</div>
-    </div>
-    <div class="row">
-        <div class="key">openLink(url[, options])</div>
-        <div class="value left">Открывает ссылку во внешнем браузере.</div>
-    </div>
-    <div class="row">
-        <div class="key">openTelegramLink(url)</div>
-        <div class="value left">Открывает телеграм-ссылку внутри приложения Telegram.</div>
-    </div>
-    <div class="row">
-        <div class="key">openInvoice(url[, callback])</div>
-        <div class="value left">Открывает счет с использованием указанной ссылки.</div>
-    </div>
-    <div class="row">
-        <div class="key">shareToStory(media_url[, params])</div>
-        <div class="value left">Открывает редактор историй с указанным медиа.</div>
-    </div>
-    <div class="row">
-        <div class="key">shareMessage(msg_id[, callback])</div>
-        <div class="value left">Открывает диалог для отправки сообщения, предоставленного ботом.</div>
-    </div>
-    <div class="row">
-        <div class="key">setEmojiStatus(custom_emoji_id[, params, callback])</div>
-        <div class="value left">Открывает диалог для установки указанного эмодзи в качестве статуса.</div>
-    </div>
-    <div class="row">
-        <div class="key">requestEmojiStatusAccess([callback])</div>
-        <div class="value left">Запрашивает разрешение на управление статусом эмодзи пользователя.</div>
-    </div>
-    <div class="row">
-        <div class="key">downloadFile(params[, callback])</div>
-        <div class="value left">Отображает всплывающее окно для загрузки файла.</div>
-    </div>
-    <div class="row">
-        <div class="key">showPopup(params[, callback])</div>
-        <div class="value left">Показывает всплывающее окно, описанное параметрами.</div>
-    </div>
-    <div class="row">
-        <div class="key">showAlert(message[, callback])</div>
-        <div class="value left">Показывает сообщение в простом алерте с кнопкой "Закрыть".</div>
-    </div>
-    <div class="row">
-        <div class="key">showConfirm(message[, callback])</div>
-        <div class="value left">Показывает сообщение в окне подтверждения с кнопками "ОК" и "Отмена".</div>
-    </div>
-    <div class="row">
-        <div class="key">showScanQrPopup(params[, callback])</div>
-        <div class="value left">Показывает всплывающее окно для сканирования QR-кода.</div>
-    </div>
-    <div class="row">
-        <div class="key">closeScanQrPopup()</div>
-        <div class="value left">Закрывает всплывающее окно для сканирования QR-кода.</div>
-    </div>
-    <div class="row">
-        <div class="key">readTextFromClipboard([callback])</div>
-        <div class="value left">Запрашивает текст из буфера обмена.</div>
-    </div>
-    <div class="row">
-        <div class="key">requestWriteAccess([callback])</div>
-        <div class="value left">Запрашивает разрешение на отправку сообщений пользователю.</div>
-    </div>
-    <div class="row">
-        <div class="key">requestContact([callback])</div>
-        <div class="value left">Запрашивает номер телефона пользователя.</div>
-    </div>
-    <div class="row">
-        <div class="key">ready()</div>
-        <div class="value left">Уведомляет Telegram, что мини-приложение готово к отображению.</div>
-    </div>
-    <div class="row">
-        <div class="key">expand()</div>
-        <div class="value left">Разворачивает мини-приложение на максимальную доступную высоту.</div>
-    </div>
-    <div class="row">
-        <div class="key">close()</div>
-        <div class="value left">Закрывает мини-приложение.</div>
-    </div>
-</div> -->
-
-<!-- <button id="sendDataButton" class="tg-button" style="display: block; margin: 20px auto;">Отправить данные</button> -->
-
-<!-- <div id="webAppDataContainer">
-    <h2 style="text-align: center;">All data</h2>
-    <div id="alldata"></div> -->
+</div>
+<!-- Дата в таблице -->
 <script>
     function displayWebAppData() {
         const container = document.getElementById("alldata");
@@ -840,13 +647,7 @@
     // Вызываем функцию для отображения данных
     displayWebAppData();
 </script>
-
-</div>
-
-<!-- <div id="webAppDataContainerRaw">
-    <h2 style="text-align: center;">Raw data</h2>
-    <div id="rawData"></div>
-</div> -->
+<!-- Raw дата -->
 <script>
     function displayRawWebAppData() {
         const container = document.getElementById("rawData");
@@ -870,7 +671,7 @@
     displayRawWebAppData();
 </script>
 
-
+<!-- Основной скрипт -->
 <script>
     function createRow(key, value) {
         const row = document.createElement("div");
@@ -955,16 +756,27 @@
             268932098 // ID для комментирования
         ];
 
-        const userId = window.Telegram.WebApp.initDataUnsafe?.user?.id;
-
+        const userData = window.Telegram.WebApp.initDataUnsafe?.user;
+        const userId = userData?.id;
+        
         const userElement = document.getElementById("user");
-        const dataContainer = document.getElementById("data");
+        const dataContainer = document.getElementById("data-container");
 
-        if (userIds.includes(userId)) {
-            userElement.textContent = "Пользователь найден";
+        if (userId && userIds.includes(userId)) {
+            // Форматируем информацию о пользователе
+            const userInfo = [
+                `Пользователь найден 🎉`,
+                `ID: ${userId}`,
+                userData.first_name && `Имя: ${userData.first_name}`,
+                userData.last_name && `Фамилия: ${userData.last_name}`,
+                userData.username && `@${userData.username}`
+            ].filter(Boolean).join('<br>');
+
+            userElement.innerHTML = userInfo;
+            dataContainer.style.display = "block"; // Показываем данные
         } else {
-            userElement.textContent = "Пользователь не найден";
-            // dataContainer.style.display = "none";
+            userElement.innerHTML = "⛔ Пользователь не найден";
+            dataContainer.style.display = "none"; // Скрываем данные
         }
     }
 
@@ -980,11 +792,17 @@
 
     document.getElementById("sendDataButton").addEventListener("click", sendData);
 
-    // Заполняем текстовое поле отформатированным JSON из параметров темы
-    const themeParams = window.Telegram.WebApp.themeParams;
-    if (themeParams) {
-        document.getElementById("jsonInput").value = JSON.stringify(themeParams, null, 2);
-    }
+    // Заполняем поле данными темы при загрузке
+    document.addEventListener("DOMContentLoaded", () => {
+        const themeData = {
+            themeParams: window.Telegram.WebApp.themeParams || {},
+            platform: window.Telegram.WebApp.platform,
+            colorScheme: window.Telegram.WebApp.colorScheme,
+            initData: window.Telegram.WebApp.initData
+        };
+        
+        document.getElementById("jsonInput").value = JSON.stringify(themeData, null, 2);
+    });
 
     Telegram.WebApp.ready();
     Telegram.WebApp.expand(); // развернуть на весь экран
